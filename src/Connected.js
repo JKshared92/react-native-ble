@@ -3,15 +3,17 @@
  */
 
 import React from 'react'
-import { View, Text, StyleSheet, Alert, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, Alert, ScrollView, TouchableOpacity, Image, Dimensions, ImageBackground } from 'react-native'
 import { SwitchActions } from 'react-navigation'
-import { Toast, Button, Modal, Portal } from '@ant-design/react-native';
+import { Toast, Modal, Button, Portal } from '@ant-design/react-native';
+import CusButton from './CustomButton'
 import Storage from './Storage';
 import {
   ParsingMessage, sendMessageToBluetooth,
   CONNECT_TYPE, POMP_STATE, FAULT_TYPE
 } from './Config';
-
+const screenW = Dimensions.get('window').width;
+const screenH = Dimensions.get('window').height;
 const prompt = Modal.prompt;
 
 class HeaderRightNavi extends React.Component {
@@ -64,30 +66,39 @@ export default class Connected extends React.Component {
       protect } = this.state
     return (
 
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#0C2F76' }}>
         <ScrollView>
-          <View style={styles.container}>
-            <Button type="ghost" onPress={this.start}>开启</Button>
-            <Button type='warning' onPress={()=>this.updateSettingModel('000000')}>对码</Button>
-            <Button type="ghost" onPress={this.close}>关闭</Button>
+          <View style={styles.topView}>
+            <Image style={styles.image1} source={require('./assets/qrcode.png')}/>
+            <View style={styles.topSubView}>
+              <Image style={styles.image} source={require('./assets/header.png')}/>
+            </View>
           </View>
-          <View style={styles.container}>
-            <Button type="ghost" onPress={()=>this.updateSettingModel('111111')}>全升</Button>
-            <Button type='warning' onPress={()=>this.updateSettingModel('999999')}>电源</Button>
-            <Button type="ghost" onPress={()=>this.updateSettingModel('222222')}>全降</Button>
-          </View>
-          <View style={styles.container}>
-            <Button type="ghost" onPress={()=>this.updateSettingModel('111112')}>前升</Button>
-            <Button type="ghost" onPress={()=>this.updateSettingModel('111113')}>前降</Button>
-            <Button type='ghost' onPress={()=>this.updateSettingModel('222223')}>后升</Button>
-            <Button type="ghost" onPress={()=>this.updateSettingModel('222224')}>后降</Button>
-          </View>
-          <View style={styles.container}>
-            <Button type="ghost" onPress={()=>this.updateSettingModel('333331')}>电流+</Button>
-            <Button type="ghost" onPress={()=>this.updateSettingModel('333330')}>电流-</Button>
-            <Button type='ghost' onPress={()=>this.updateSettingModel('444441')}>时间+</Button>
-            <Button type="ghost" onPress={()=>this.updateSettingModel('444440')}>时间-</Button>
-          </View>
+          <ImageBackground style={styles.mainContent} source={require('./assets/body.png')}>
+            <Image style={styles.image2} source={require('./assets/logo.png')}/>
+            <View style={styles.container}>
+              <CusButton onPress={this.start} title="开启"></CusButton>
+              <CusButton onPress={()=>this.updateSettingModel('000000')} title="对码"></CusButton>
+              <CusButton onPress={this.close} title="关闭"></CusButton>
+            </View>
+            <View style={styles.container}>
+              <CusButton onPress={()=>this.updateSettingModel('111111')} title="全升"></CusButton>
+              <CusButton warning={true} onPress={()=>this.updateSettingModel('999999')} title="电源"></CusButton>
+              <CusButton onPress={()=>this.updateSettingModel('222222')} title="全降"></CusButton>
+            </View>
+            <View style={styles.container}>
+              <CusButton onPress={()=>this.updateSettingModel('111112')} title="前升"></CusButton>
+              <CusButton onPress={()=>this.updateSettingModel('111113')} title="前降"></CusButton>
+              <CusButton onPress={()=>this.updateSettingModel('222223')} title="后升"></CusButton>
+              <CusButton onPress={()=>this.updateSettingModel('222224')} title="后降"></CusButton>
+            </View>
+            <View style={styles.container}>
+              <CusButton onPress={()=>this.updateSettingModel('333331')} title="电流+"></CusButton>
+              <CusButton onPress={()=>this.updateSettingModel('333330')} title="电流-"></CusButton>
+              <CusButton onPress={()=>this.updateSettingModel('444441')} title="时间+"></CusButton>
+              <CusButton onPress={()=>this.updateSettingModel('444440')} title="时间-"></CusButton>
+            </View>
+          </ImageBackground>
         </ScrollView>
       </View>
     )
@@ -204,5 +215,33 @@ const styles = StyleSheet.create({
   settingText: {
     fontSize: 17,
     marginRight: 20
+  },
+  topView: {
+    position: 'relative'
+  },
+  topSubView: {
+    position: 'absolute'
+  },
+  image: {
+    width: screenW,
+    height: screenW * 310 / 750
+  },
+  image1: {
+    zIndex: 10,
+    marginLeft: 18,
+    width: screenW - 36,
+    height: screenW * 369 / 714,
+    resizeMode: 'contain'
+  },
+  image2: {
+    width: 128,
+    height: 50
+  },
+  mainContent: {
+    width: screenW,
+    height: screenW * 864 / 750,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
   }
 })
