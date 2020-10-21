@@ -53,54 +53,6 @@ export default class Connected extends React.Component {
     this.start()
   }
 
-  // 接收到的数据进行处理
-  handleUpdateValue=(data)=>{
-    console.log('接收到数据1：', data.value)
-    const getValue = data.value.toUpperCase();
-
-    const result = ParsingMessage(getValue)
-    if (result.status !== '200') {
-      Toast.info(result.message, 2)
-      return
-    }
-    const address = result.data.address
-    const value = result.data.value
-    console.log('转之后的数据:', value)
-    if (address === CONNECT_TYPE.BATTERY_VOLTAGE) {
-      console.log('电瓶电压：', value)
-      this.setState({
-        voltage: value
-      })
-    } else if (address === CONNECT_TYPE.MOTOR_WORK_CURRENT) {
-      console.log('电机工作电流：', value)
-      this.setState({
-        motorCurrent: value
-      })
-    }else if (address === CONNECT_TYPE.POMP_STATE) {
-      console.log('篷布状态：', value)
-      let stateTitle = '关'
-      if (value === 1) {
-        stateTitle = '开'
-      }
-      this.setState({
-        pompState: stateTitle
-      })
-    } else if (address === CONNECT_TYPE.FAULT_STATE) {
-      console.log('故障状态：', value)
-      let stateTitle = '其他'
-      if (value === 1) {
-        stateTitle = '故障'
-      } else if (value === 2) {
-        stateTitle = '正常'
-      } else if (value === 3) {
-        stateTitle = '欠压'
-      }
-      this.setState({
-        faultType: stateTitle
-      })
-    }
-  }
-
   render() {
     const {
       voltage,
