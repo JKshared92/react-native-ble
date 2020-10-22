@@ -35,7 +35,7 @@ target 'BleManagerDemo' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  pod 'react-native-ble-manager', :path => '../node_modules/react-native-ble-manager'
+
 
   target 'BleManagerDemoTests' do
     inherit! :search_paths
