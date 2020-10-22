@@ -69,7 +69,9 @@ export default class Connected extends React.Component {
       <View style={{ flex: 1, backgroundColor: '#0C2F76' }}>
         <ScrollView>
           <View style={styles.topView}>
-            <Image style={styles.image1} source={require('./assets/qrcode.png')}/>
+            <View style={styles.imageView}>
+              <Image style={styles.image1} source={require('./assets/qrcode.png')}/>
+            </View>
             <View style={styles.topSubView}>
               <Image style={styles.image} source={require('./assets/header.png')}/>
             </View>
@@ -99,6 +101,7 @@ export default class Connected extends React.Component {
               <CusButton onPress={()=>this.updateSettingModel('444440')} title="时间-"></CusButton>
             </View>
           </ImageBackground>
+          <Text style={styles.company}>河南大诚自动篷布技术有限公司</Text>
         </ScrollView>
       </View>
     )
@@ -224,12 +227,20 @@ const styles = StyleSheet.create({
   },
   image: {
     width: screenW,
-    height: screenW * 310 / 750
+    height: screenW * 310 / 750,
+  },
+  imageView: {
+    marginTop: 5,
+    zIndex: 10,
+    shadowColor: '#000',
+    elevation: 5,
+    shadowOffset: {width: 0, height: 0},
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
   },
   image1: {
-    zIndex: 10,
-    marginLeft: 18,
-    width: screenW - 36,
+    marginLeft: 10,
+    width: screenW - 20,
     height: screenW * 369 / 714,
     resizeMode: 'contain'
   },
@@ -243,5 +254,16 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-around',
+  },
+  company: {
+    fontSize: 18,
+    fontWeight: '500',
+    width: screenW,
+    paddingLeft: 18,
+    paddingRight: 18,
+    marginTop: 10,
+    color: '#fff',
+    textAlign: 'center',
+    letterSpacing: 3
   }
 })
