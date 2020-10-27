@@ -129,6 +129,7 @@ export default class Connected extends React.Component {
 
   /** 开启 */
   start = () => {
+    this.updateSettingModel('555555')
     if (this.state.currentType === 'start') {
       Toast.info('已开启')
       return
@@ -150,6 +151,8 @@ export default class Connected extends React.Component {
 
   /** 关闭 */
   close = () => {
+    this.updateSettingModel('666666')
+
     if (this.state.currentType === 'end') {
       Toast.info('已关闭')
       return
