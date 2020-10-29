@@ -79,9 +79,9 @@ export default class Connected extends React.Component {
           <ImageBackground style={styles.mainContent} source={require('./assets/body.png')}>
             <Image style={styles.image2} source={require('./assets/logo.png')}/>
             <View style={styles.container}>
-              <CusButton onPress={this.start} title="开启"></CusButton>
+              <CusButton onPress={this.updateSettingModel('555555')} title="开启"></CusButton>
               <CusButton onPress={()=>this.updateSettingModel('000000')} title="对码"></CusButton>
-              <CusButton onPress={this.close} title="关闭"></CusButton>
+              <CusButton onPress={this.updateSettingModel('666666')} title="关闭"></CusButton>
             </View>
             <View style={styles.container}>
               <CusButton onPress={()=>this.updateSettingModel('111111')} title="全升"></CusButton>
@@ -129,7 +129,6 @@ export default class Connected extends React.Component {
 
   /** 开启 */
   start = () => {
-    this.updateSettingModel('555555')
     if (this.state.currentType === 'start') {
       Toast.info('已开启')
       return
@@ -151,8 +150,6 @@ export default class Connected extends React.Component {
 
   /** 关闭 */
   close = () => {
-    this.updateSettingModel('666666')
-
     if (this.state.currentType === 'end') {
       Toast.info('已关闭')
       return
