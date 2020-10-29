@@ -79,9 +79,9 @@ export default class Connected extends React.Component {
           <ImageBackground style={styles.mainContent} source={require('./assets/body.png')}>
             <Image style={styles.image2} source={require('./assets/logo.png')}/>
             <View style={styles.container}>
-              <CusButton onPress={this.updateSettingModel('555555')} title="开启"></CusButton>
+              <CusButton onPress={()=>this.updateSettingModel('555555')} title="开启"></CusButton>
               <CusButton onPress={()=>this.updateSettingModel('000000')} title="对码"></CusButton>
-              <CusButton onPress={this.updateSettingModel('666666')} title="关闭"></CusButton>
+              <CusButton onPress={()=>this.updateSettingModel('666666')} title="关闭"></CusButton>
             </View>
             <View style={styles.container}>
               <CusButton onPress={()=>this.updateSettingModel('111111')} title="全升"></CusButton>
@@ -130,21 +130,21 @@ export default class Connected extends React.Component {
   /** 开启 */
   start = () => {
     if (this.state.currentType === 'start') {
-      Toast.info('已开启')
+      // Toast.info('已开启')
       return
     }
-    Toast.loading('开启中...')
+    // Toast.loading('开启中...')
     BluetoothManager.startNotification()
       .then(()=>{
-        Portal.remove()
-        Toast.info('开启成功')
+        // Portal.remove()
+        // Toast.info('开启成功')
         this.setState({
           currentType: 'start'
         })
       })
       .catch(err=>{
-        Portal.remove()
-        Toast.info('开启失败')
+        // Portal.remove()
+        // Toast.info('开启失败')
       })
   }
 
