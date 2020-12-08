@@ -10,7 +10,7 @@ import {
     View,
     FlatList,
     Platform,
-    TextInput,
+    PermissionsAndroid,
     Alert
 } from 'react-native'
 import BleModule from './BleModule';
@@ -62,6 +62,7 @@ export default class Search extends React.Component {
   }
 
   componentDidMount() {
+    this.getPermissions()
     // 导航栏按钮事件
     this.props.navigation.setParams({ clickSearch: () => this.scan() });
     // 蓝牙初始化
@@ -74,6 +75,20 @@ export default class Search extends React.Component {
     this.disconnectPeripheralListener = BluetoothManager.addListener('BleManagerDisconnectPeripheral',this.handleDisconnectPeripheral);
 
     // this.updateValueListener = BluetoothManager.addListener('BleManagerDidUpdateValueForCharacteristic', this.handleUpdateValue);
+  }
+
+  async getPermissions() {
+    console.log(9999);
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      {
+        title: 'Permission Localisation Bluetooth',
+        message: 'Requirement for Bluetooth',
+        buttonNeutral: 'Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      }
+    )
   }
 
   /** 连接成功跳转到成功页 */
