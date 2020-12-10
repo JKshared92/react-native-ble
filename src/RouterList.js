@@ -5,6 +5,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import SearchScreen from './Search'
 import SettingScreen from './Setting'
 import ConnectedScreen from './Connected'
+import NewConnectedScreen from './NewConnected'
 
 const AppNavigator = createStackNavigator(
   {
@@ -17,7 +18,7 @@ const AppNavigator = createStackNavigator(
 
 const DetailNavigator = createStackNavigator(
   {
-    Main: ConnectedScreen,
+    Main: NewConnectedScreen,
     Setting: SettingScreen
   },
   {
