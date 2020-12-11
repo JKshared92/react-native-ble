@@ -64,24 +64,24 @@ export default class NewConnected extends React.Component {
         <Text style={styles.big_title}>智能蓬布系统控制器</Text>
         <View style={styles.center_container}>
           <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('888881')}>
-              <View style={styles.open_box}>
-                <Text style={styles.open_title}>开</Text>
-              </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('888880')}>
-              <View style={styles.close_box}>
-                <Text style={styles.open_title}>关</Text>
-              </View>
-            </TouchableWithoutFeedback>
-            <View style={styles.left_box}>
-              <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('111112')}>
-                <Text style={styles.left_box_title}>前升</Text>
-              </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('111113')}>
-                <Text style={styles.left_box_title}>前降</Text>
-              </TouchableWithoutFeedback>
+            <View style={styles.open_box}>
+              <Text style={styles.open_title}>开</Text>
             </View>
-            <View style={styles.right_box}>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('888880')}>
+            <View style={styles.close_box}>
+              <Text style={styles.open_title}>关</Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <View style={styles.left_box}>
+            <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('111112')}>
+              <Text style={styles.left_box_title}>前升</Text>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('111113')}>
+              <Text style={styles.left_box_title}>前降</Text>
+            </TouchableWithoutFeedback>
+          </View>
+          <View style={styles.right_box}>
               <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('222223')}>
                 <Text style={styles.left_box_title}>后升</Text>
               </TouchableWithoutFeedback>
@@ -123,24 +123,24 @@ export default class NewConnected extends React.Component {
   }
 
   updateSettingModel = (value) => {
-    Toast.info('点击事件')
-    // Toast.loading('传输中...')
-    // const result = sendMessageToBluetooth(value)
-    // if (result.status !== '200') {
-    //   Toast.info(result.message, 2)
-    //   return
-    // }
-    // const resultValue = result.value
-    // console.log('写入的数据:', resultValue)
-    // BluetoothManager.write(resultValue)
-    //   .then(() => {
-    //     // this.updateDate(saveName, value)
-    //     Portal.remove()
-    //     Toast.info('成功', 2)
-    //   }).catch(() => {
-    //     Portal.remove()
-    //     Toast.info('设置参数出错', 2)
-    //   })
+    // Toast.info('点击事件')
+    Toast.loading('传输中...')
+    const result = sendMessageToBluetooth(value)
+    if (result.status !== '200') {
+      Toast.info(result.message, 2)
+      return
+    }
+    const resultValue = result.value
+    console.log('写入的数据:', resultValue)
+    BluetoothManager.write(resultValue)
+      .then(() => {
+        // this.updateDate(saveName, value)
+        Portal.remove()
+        Toast.info('成功', 2)
+      }).catch(() => {
+        Portal.remove()
+        Toast.info('设置参数出错', 2)
+      })
   }
 
   /** 开启 */
@@ -228,6 +228,7 @@ const styles = StyleSheet.create({
   image_view1: {
     width: 124,
     height: 55,
+    marginLeft: 10,
     resizeMode: 'cover',
   },
   image_view2: {
