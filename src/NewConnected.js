@@ -63,29 +63,7 @@ export default class NewConnected extends React.Component {
         </View>
         <Text style={styles.big_title}>智能蓬布系统控制器</Text>
         <View style={styles.center_container}>
-          <View style={styles.cycle_container}>
-            <View style={styles.left_line}></View>
-            <View style={styles.right_line}></View>
-            <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('111111')}>
-              <Text style={styles.top_bottom_title}>全升</Text>
-            </TouchableWithoutFeedback>
-            <View style={styles.center_box}>
-              <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('555551')}>
-                <Text style={styles.left_right_title}>侧开</Text>
-              </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('000000')}>
-                <View style={styles.center_view}>
-                  <Text style={styles.center_view_title}>急停</Text>
-                </View>
-              </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('555550')}>
-                <Text style={styles.left_right_title}>侧关</Text>
-              </TouchableWithoutFeedback>
-            </View>
-            <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('222222')}>
-              <Text style={styles.top_bottom_title}>全降</Text>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('888881')}>
+          <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('888881')}>
               <View style={styles.open_box}>
                 <Text style={styles.open_title}>开</Text>
               </View>
@@ -111,6 +89,28 @@ export default class NewConnected extends React.Component {
                 <Text style={styles.left_box_title}>后降</Text>
               </TouchableWithoutFeedback>
             </View>
+          <View style={styles.cycle_container}>
+            <View style={styles.left_line}></View>
+            <View style={styles.right_line}></View>
+            <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('111111')}>
+              <Text style={styles.top_bottom_title}>全升</Text>
+            </TouchableWithoutFeedback>
+            <View style={styles.center_box}>
+              <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('555551')}>
+                <Text style={styles.left_right_title}>侧开</Text>
+              </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('000000')}>
+                <View style={styles.center_view}>
+                  <Text style={styles.center_view_title}>急停</Text>
+                </View>
+              </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('555550')}>
+                <Text style={styles.left_right_title}>侧关</Text>
+              </TouchableWithoutFeedback>
+            </View>
+            <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('222222')}>
+              <Text style={styles.top_bottom_title}>全降</Text>
+            </TouchableWithoutFeedback>
           </View>
           <View style={styles.directive_box}>
             {isOpen ? <View style={styles.directive_green}></View>
@@ -123,23 +123,24 @@ export default class NewConnected extends React.Component {
   }
 
   updateSettingModel = (value) => {
-    Toast.loading('传输中...')
-    const result = sendMessageToBluetooth(value)
-    if (result.status !== '200') {
-      Toast.info(result.message, 2)
-      return
-    }
-    const resultValue = result.value
-    console.log('写入的数据:', resultValue)
-    BluetoothManager.write(resultValue)
-      .then(() => {
-        // this.updateDate(saveName, value)
-        Portal.remove()
-        Toast.info('成功', 2)
-      }).catch(() => {
-        Portal.remove()
-        Toast.info('设置参数出错', 2)
-      })
+    Toast.info('点击事件')
+    // Toast.loading('传输中...')
+    // const result = sendMessageToBluetooth(value)
+    // if (result.status !== '200') {
+    //   Toast.info(result.message, 2)
+    //   return
+    // }
+    // const resultValue = result.value
+    // console.log('写入的数据:', resultValue)
+    // BluetoothManager.write(resultValue)
+    //   .then(() => {
+    //     // this.updateDate(saveName, value)
+    //     Portal.remove()
+    //     Toast.info('成功', 2)
+    //   }).catch(() => {
+    //     Portal.remove()
+    //     Toast.info('设置参数出错', 2)
+    //   })
   }
 
   /** 开启 */
@@ -243,6 +244,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    position: 'relative',
   },
   cycle_container: {
     marginTop: 20,
@@ -314,7 +316,7 @@ const styles = StyleSheet.create({
     width: 50,
     position: 'absolute',
     borderRadius: 25,
-    top: 0,
+    top: 20,
     left: -35,
   },
   open_title: {
@@ -330,7 +332,7 @@ const styles = StyleSheet.create({
     width: 50,
     position: 'absolute',
     borderRadius: 25,
-    top: 0,
+    top: 20,
     right: -35,
   },
   left_box: {
@@ -344,7 +346,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     position: 'absolute',
     left: -50,
-    top: 110,
+    top: 135,
   },
   right_box: {
     display: 'flex',
@@ -357,7 +359,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     position: 'absolute',
     right: -50,
-    top: 110,
+    top: 135,
   },
   left_box_title: {
     color: '#fff',
