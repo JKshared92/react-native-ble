@@ -160,23 +160,23 @@ export default class NewConnected extends React.Component {
       })
     }, 1000)
 
-    // Toast.loading('传输中...')
-    // const result = sendMessageToBluetooth(value)
-    // if (result.status !== '200') {
-    //   Toast.info(result.message, 2)
-    //   return
-    // }
-    // const resultValue = result.value
-    // console.log('写入的数据:', resultValue)
-    // BluetoothManager.write(resultValue)
-    //   .then(() => {
-    //     // this.updateDate(saveName, value)
-    //     Portal.remove()
-    //     Toast.info('成功', 2)
-    //   }).catch(() => {
-    //     Portal.remove()
-    //     Toast.info('设置参数出错', 2)
-    //   })
+    Toast.loading('传输中...')
+    const result = sendMessageToBluetooth(value)
+    if (result.status !== '200') {
+      Toast.info(result.message, 2)
+      return
+    }
+    const resultValue = result.value
+    console.log('写入的数据:', resultValue)
+    BluetoothManager.write(resultValue)
+      .then(() => {
+        // this.updateDate(saveName, value)
+        Portal.remove()
+        Toast.info('成功', 2)
+      }).catch(() => {
+        Portal.remove()
+        Toast.info('设置参数出错', 2)
+      })
   }
 
   /** 开启 */
