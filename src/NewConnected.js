@@ -46,6 +46,7 @@ export default class NewConnected extends React.Component {
     super(props);
     this.state = {
       isOpen: false,
+      showHigh: false,
     }
   }
 
@@ -54,7 +55,7 @@ export default class NewConnected extends React.Component {
   }
 
   render() {
-    const { isOpen } = this.state
+    const { isOpen, showHigh } = this.state
     return (
       <View style={styles.container}>
         <View style={styles.top_container}>
@@ -113,8 +114,7 @@ export default class NewConnected extends React.Component {
             </TouchableWithoutFeedback>
           </View>
           <View style={styles.directive_box}>
-            {isOpen ? <View style={styles.directive_green}></View>
-            : <View style={styles.directive_red}></View>}
+            <View style={this.directiveCycleStyle()}></View>
             <Text style={styles.directive_title}>指示灯</Text>
           </View>
         </View>
@@ -122,25 +122,61 @@ export default class NewConnected extends React.Component {
     )
   }
 
+  directiveCycleStyle = () => {
+    const { showHigh, isOpen } = this.state
+    if (showHigh) {
+      return {
+        backgroundColor: '#7CFC00',
+        height: 10,
+        width: 10,
+        borderRadius: 5,
+      }
+    } else if (isOpen) {
+      return {
+        backgroundColor: '#306B3C',
+        height: 10,
+        width: 10,
+        borderRadius: 5,
+      }
+    } else {
+      return {
+        backgroundColor: '#CD252A',
+        height: 10,
+        width: 10,
+        borderRadius: 5,
+      }
+    }
+  }
+
   updateSettingModel = (value) => {
     // Toast.info('点击事件')
-    Toast.loading('传输中...')
-    const result = sendMessageToBluetooth(value)
-    if (result.status !== '200') {
-      Toast.info(result.message, 2)
-      return
-    }
-    const resultValue = result.value
-    console.log('写入的数据:', resultValue)
-    BluetoothManager.write(resultValue)
-      .then(() => {
-        // this.updateDate(saveName, value)
-        Portal.remove()
-        Toast.info('成功', 2)
-      }).catch(() => {
-        Portal.remove()
-        Toast.info('设置参数出错', 2)
+
+    this.setState({
+      showHigh: true
+    })
+    setTimeout(() => {
+      this.setState({
+        showHigh: false
       })
+    }, 1000)
+
+    // Toast.loading('传输中...')
+    // const result = sendMessageToBluetooth(value)
+    // if (result.status !== '200') {
+    //   Toast.info(result.message, 2)
+    //   return
+    // }
+    // const resultValue = result.value
+    // console.log('写入的数据:', resultValue)
+    // BluetoothManager.write(resultValue)
+    //   .then(() => {
+    //     // this.updateDate(saveName, value)
+    //     Portal.remove()
+    //     Toast.info('成功', 2)
+    //   }).catch(() => {
+    //     Portal.remove()
+    //     Toast.info('设置参数出错', 2)
+    //   })
   }
 
   /** 开启 */
@@ -378,6 +414,12 @@ const styles = StyleSheet.create({
   },
   directive_green: {
     backgroundColor: '#306B3C',
+    height: 10,
+    width: 10,
+    borderRadius: 5,
+  },
+  directive_high: {
+    backgroundColor: '#7CFC00',
     height: 10,
     width: 10,
     borderRadius: 5,
