@@ -58,10 +58,10 @@ export default class NewConnected extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.top_container}>
-          <Image style={styles.image_view1} source={require('./assets/name.png')}/>
-          <Image style={styles.image_view2} source={require('./assets/code.png')}/>
+          {/* <Image style={styles.image_view1} source={require('./assets/name.png')}/>
+          <Image style={styles.image_view2} source={require('./assets/code.png')}/> */}
         </View>
-        <Text style={styles.big_title}>智能蓬布系统控制器</Text>
+        <Text style={styles.big_title}></Text>
         <View style={styles.center_container}>
           <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('888881')}>
             <View style={styles.open_box}>
@@ -97,7 +97,7 @@ export default class NewConnected extends React.Component {
             </TouchableWithoutFeedback>
             <View style={styles.center_box}>
               <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('555551')}>
-                <Text style={styles.left_right_title}>侧开</Text>
+                <Text style={styles.left_right_title}>电流 +</Text>
               </TouchableWithoutFeedback>
               <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('000000')}>
                 <View style={styles.center_view}>
@@ -105,7 +105,7 @@ export default class NewConnected extends React.Component {
                 </View>
               </TouchableWithoutFeedback>
               <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('555550')}>
-                <Text style={styles.left_right_title}>侧关</Text>
+                <Text style={styles.left_right_title}>电流 -</Text>
               </TouchableWithoutFeedback>
             </View>
             <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('222222')}>
@@ -221,6 +221,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
+    height: 55,
     justifyContent: 'space-between',
     marginRight: 10,
     marginTop: 10,
@@ -298,8 +299,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   left_right_title: {
-    height: 70,
-    width: 45,
+    height: 80,
+    paddingLeft: 5,
+    paddingRight: 5,
+    width: 40,
     fontSize: 24,
     color: '#fff',
     textAlign: 'center',
