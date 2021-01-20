@@ -3,7 +3,7 @@
  */
 
 import React from 'react'
-import { View, Text, StyleSheet, Alert, ScrollView, TouchableOpacity, Image, Dimensions, ImageBackground } from 'react-native'
+import { View, Text, StyleSheet, Alert, ScrollView, TouchableWithoutFeedback, Image, Dimensions, ImageBackground } from 'react-native'
 import { SwitchActions } from 'react-navigation'
 import { Toast, Modal, Button, Portal } from '@ant-design/react-native';
 import CusButton from './CustomButton'
@@ -46,63 +46,50 @@ export default class Connected extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentType: 'normal',
     }
   }
 
   componentDidMount() {
-    // BluetoothManager.addListener('BleManagerDidUpdateValueForCharacteristic', this.handleUpdateValue);
     this.start()
   }
 
   render() {
-    const {
-      voltage,
-      pompState,
-      motorCurrent,
-      faultType,
-      operationHours,
-      StallCurrent,
-      protect } = this.state
     return (
-
-      <View style={{ flex: 1, backgroundColor: '#0C2F76' }}>
-        <ScrollView>
-          <View style={styles.topView}>
-            <View style={styles.imageView}>
-              <Image style={styles.image1} source={require('./assets/qrcode.png')}/>
-            </View>
-            <View style={styles.topSubView}>
-              <Image style={styles.image} source={require('./assets/header.png')}/>
-            </View>
+      <View style={styles.container}>
+        <View style={styles.fisrt_box}>
+          <Image style={styles.first_image_one} source={require('./assets/stop.png')}></Image>
+          <View style={styles.first_box_second}>
+            <Image style={styles.first_image_two} source={require('./assets/background.jpg')} />
           </View>
-          <ImageBackground style={styles.mainContent} source={require('./assets/body.png')}>
-            <Image style={styles.image2} source={require('./assets/logo.png')}/>
-            <View style={styles.container}>
-              <CusButton onPress={()=>this.updateSettingModel('555555')} title="开启"></CusButton>
-              <CusButton onPress={()=>this.updateSettingModel('000000')} title="对码"></CusButton>
-              <CusButton onPress={()=>this.updateSettingModel('666666')} title="关闭"></CusButton>
-            </View>
-            <View style={styles.container}>
-              <CusButton onPress={()=>this.updateSettingModel('111111')} title="全升"></CusButton>
-              <CusButton warning={true} onPress={()=>this.updateSettingModel('999999')} title="电源"></CusButton>
-              <CusButton onPress={()=>this.updateSettingModel('222222')} title="全降"></CusButton>
-            </View>
-            <View style={styles.container}>
-              <CusButton onPress={()=>this.updateSettingModel('111112')} title="前升"></CusButton>
-              <CusButton onPress={()=>this.updateSettingModel('111113')} title="前降"></CusButton>
-              <CusButton onPress={()=>this.updateSettingModel('222223')} title="后升"></CusButton>
-              <CusButton onPress={()=>this.updateSettingModel('222224')} title="后降"></CusButton>
-            </View>
-            <View style={styles.container}>
-              <CusButton onPress={()=>this.updateSettingModel('333331')} title="电流+"></CusButton>
-              <CusButton onPress={()=>this.updateSettingModel('333330')} title="电流-"></CusButton>
-              <CusButton onPress={()=>this.updateSettingModel('444441')} title="时间+"></CusButton>
-              <CusButton onPress={()=>this.updateSettingModel('444440')} title="时间-"></CusButton>
-            </View>
-          </ImageBackground>
-          <Text style={styles.company}>河南大诚自动篷布技术有限公司</Text>
-        </ScrollView>
+          <Image style={styles.fisrt_image_three} source={require('./assets/qrcode.jpg')}></Image>
+        </View>
+        <View style={styles.second_box}>
+          <Text style={styles.second_box_title}>智能篷布系统控制器</Text>
+          <Text style={styles.second_box_margin}>TY-1000-10</Text>
+        </View>
+        <View style={styles.center_box}>
+          <View style={styles.center_box_item}>
+            <View style={styles.center_box_red_cycle}></View>
+            <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('222333')}>
+              <Image style={styles.center_box_btn} source={require('./assets/stop.png')} />
+            </TouchableWithoutFeedback>
+          </View>
+          <View style={styles.center_box_item}>
+            <View style={styles.center_box_blue_cycle}></View>
+            <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('222555')}>
+              <Image style={styles.center_box_btn} source={require('./assets/pos.png')} />
+            </TouchableWithoutFeedback>
+          </View>
+          <View style={styles.center_box_item}>
+            <View style={styles.center_box_blue_cycle}></View>
+            <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('222444')}>
+              <Image style={styles.center_box_btn} source={require('./assets/rever.png')} />
+            </TouchableWithoutFeedback>
+          </View>
+        </View>
+        <View style={styles.bottom_box}>
+          <Text style={styles.second_box_title}>长葛市腾源气配有限公司</Text>
+        </View>
       </View>
     )
   }
@@ -127,143 +114,115 @@ export default class Connected extends React.Component {
       })
   }
 
-  /** 开启 */
   start = () => {
-    if (this.state.currentType === 'start') {
-      // Toast.info('已开启')
-      return
-    }
-    // Toast.loading('开启中...')
+    Toast.loading('开启中...')
     BluetoothManager.startNotification()
       .then(()=>{
-        // Portal.remove()
-        // Toast.info('开启成功')
-        this.setState({
-          currentType: 'start'
-        })
-      })
-      .catch(err=>{
-        // Portal.remove()
-        // Toast.info('开启失败')
-      })
-  }
-
-  /** 关闭 */
-  close = () => {
-    if (this.state.currentType === 'end') {
-      Toast.info('已关闭')
-      return
-    }
-    Toast.loading('关闭中...')
-    BluetoothManager.stopNotification()
-      .then(()=>{
         Portal.remove()
-        Toast.info('关闭成功')
+        setTimeout(()=>{
+          Toast.info('开启成功')
+        }, 100);
         this.setState({
-          currentType: 'end'
+          isOpen: true
         })
       })
       .catch(err=>{
         Portal.remove()
-        Toast.info('关闭失败')
+        Toast.info('开启失败')
       })
-  }
-
-  /** 停止 */
-  stop = () => {
-    BluetoothManager.stopNotification()
-      .then(()=>{
-        this.alert('已停止接收');
-        this.setState({
-          currentType: '已停止'
-        })
-        sendMessageToBluetooth(CONNECT_TYPE.STOP, 0)
-      })
-      .catch(err=>{
-        this.alert('关闭失败');
-      })
-  }
-
-  alert(text){
-    Alert.alert('提示',text,[{ text:'确定',onPress:()=>{ } }]);
   }
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     display: 'flex',
-    height: 50,
     width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 40,
-  },
-  contentView: {
-    display: 'flex',
-    marginTop: 20,
-    width: '100%',
-    padding: 20,
-    flexDirection: 'column'
-  },
-  contentText: {
-    marginBottom: 10,
-    fontSize: 17,
-  },
-  settingContent: {
-    display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: 20
+    backgroundColor: '#fff',
+    padding: 20,
   },
-  settingText: {
-    fontSize: 17,
-    marginRight: 20
+  fisrt_box: {
+    display: 'flex',
+    flexDirection: 'row',
   },
-  topView: {
-    position: 'relative'
+  first_image_one: {
+    height: 50,
+    width: 50,
+    resizeMode: 'center',
+    backgroundColor: '#ccc',
   },
-  topSubView: {
-    position: 'absolute'
-  },
-  image: {
-    width: screenW,
-    height: screenW * 310 / 750,
-  },
-  imageView: {
-    marginTop: 5,
-    zIndex: 10,
-    shadowColor: '#000',
-    elevation: 5,
-    shadowOffset: {width: 0, height: 0},
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-  },
-  image1: {
-    marginLeft: 10,
-    width: screenW - 20,
-    height: screenW * 369 / 714,
-    resizeMode: 'contain'
-  },
-  image2: {
-    width: 128,
-    height: 50
-  },
-  mainContent: {
-    width: screenW,
-    height: screenW * 864 / 750,
+  first_box_second: {
+    flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#666',
   },
-  company: {
-    fontSize: 18,
-    fontWeight: '500',
-    width: screenW,
-    paddingLeft: 18,
-    paddingRight: 18,
+  first_image_two: {
+    height: 100,
+    width: '100%',
+    resizeMode: 'contain',
+    backgroundColor: '#333',
+  },
+  fisrt_image_three: {
+    width: 60,
+    height: 80,
+    backgroundColor: '#ccc',
+  },
+  second_box: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 10,
-    color: '#fff',
-    textAlign: 'center',
-    letterSpacing: 3
+  },
+  second_box_title: {
+    fontSize: 24,
+    fontWeight: '500'
+  },
+  second_box_margin: {
+    fontSize: 24,
+    fontWeight: '500',
+    marginTop: 10,
+  },
+  center_box: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    padding: 25,
+    width: '100%',
+  },
+  center_box_item: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  center_box_red_cycle: {
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    borderWidth: 3,
+    borderColor: '#DF0717'
+  },
+  center_box_blue_cycle: {
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#069DE7'
+  },
+  center_box_btn: {
+    marginTop: 30,
+    height: 60,
+    width: 60,
+    backgroundColor: '#ccc'
+  },
+  bottom_box: {
+    borderBottomColor: '#069DE7',
+    borderBottomWidth: 1,
   }
 })
