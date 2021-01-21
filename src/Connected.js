@@ -57,7 +57,7 @@ export default class Connected extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.fisrt_box}>
-          <Image style={styles.first_image_one} source={require('./assets/stop.png')}></Image>
+          <Image style={styles.first_image_one} source={require('./assets/blue.png')}></Image>
           <View style={styles.first_box_second}>
             <Image style={styles.first_image_two} source={require('./assets/background.jpg')} />
           </View>
@@ -151,7 +151,6 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     resizeMode: 'center',
-    backgroundColor: '#ccc',
   },
   first_box_second: {
     flex: 1,
@@ -159,18 +158,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#666',
   },
   first_image_two: {
     height: 100,
     width: '100%',
     resizeMode: 'contain',
-    backgroundColor: '#333',
   },
   fisrt_image_three: {
     width: 60,
     height: 80,
-    backgroundColor: '#ccc',
   },
   second_box: {
     display: 'flex',
@@ -219,7 +215,6 @@ const styles = StyleSheet.create({
     marginTop: 30,
     height: 60,
     width: 60,
-    backgroundColor: '#ccc'
   },
   bottom_box: {
     borderBottomColor: '#069DE7',
