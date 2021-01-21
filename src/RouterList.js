@@ -18,7 +18,7 @@ const AppNavigator = createStackNavigator(
 
 const DetailNavigator = createStackNavigator(
   {
-    Main: NewConnectedScreen,
+    Main: ConnectedScreen,
     Setting: SettingScreen
   },
   {

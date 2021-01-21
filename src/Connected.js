@@ -3,7 +3,7 @@
  */
 
 import React from 'react'
-import { View, Text, StyleSheet, Alert, ScrollView, TouchableOpacity, Image, Dimensions, ImageBackground } from 'react-native'
+import { View, Text, StyleSheet, Alert, ScrollView, TouchableWithoutFeedback, Image, Dimensions, ImageBackground } from 'react-native'
 import { SwitchActions } from 'react-navigation'
 import { Toast, Modal, Button, Portal } from '@ant-design/react-native';
 import CusButton from './CustomButton'
@@ -46,7 +46,9 @@ export default class Connected extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentType: 'normal',
+      isStart: false,
+      isClose: false,
+      isStop: false,
     }
   }
 
@@ -55,54 +57,78 @@ export default class Connected extends React.Component {
     this.start()
   }
 
-  render() {
-    const {
-      voltage,
-      pompState,
-      motorCurrent,
-      faultType,
-      operationHours,
-      StallCurrent,
-      protect } = this.state
-    return (
+  previousStart = () => {
+    setInterval(() => {
+      this.setState({
+        isStart: !this.state.isStart
+      })
+    }, 500)
+  }
 
-      <View style={{ flex: 1, backgroundColor: '#0C2F76' }}>
-        <ScrollView>
-          <View style={styles.topView}>
-            <View style={styles.imageView}>
-              <Image style={styles.image1} source={require('./assets/qrcode.png')}/>
-            </View>
-            <View style={styles.topSubView}>
-              <Image style={styles.image} source={require('./assets/header.png')}/>
-            </View>
+  previousStop = () => {
+    setInterval(() => {
+      this.setState({
+        isStop: !this.state.isStop
+      })
+    }, 500)
+  }
+
+  previousClose = () => {
+    setInterval(() => {
+      this.setState({
+        isClose: !this.state.isClose
+      })
+    }, 500)
+  }
+
+  stopPrevious = () => {
+    this.setState({
+      isStop: false,
+      isStart: false,
+      isClose: false
+    })
+  }
+
+  render() {
+    const { isStart, isClose, isStop } = this.state;
+    return (
+      <View style={styles.container}>
+        <View style={styles.top_wrapper}>
+          <View style={styles.top_sub_box}>
+            <Image source={require('./assets/name.jpg')} style={styles.top_big_img} />
           </View>
-          <ImageBackground style={styles.mainContent} source={require('./assets/body.png')}>
-            <Image style={styles.image2} source={require('./assets/logo.png')}/>
-            <View style={styles.container}>
-              <CusButton onPress={()=>this.updateSettingModel('555555')} title="开启"></CusButton>
-              <CusButton onPress={()=>this.updateSettingModel('000000')} title="对码"></CusButton>
-              <CusButton onPress={()=>this.updateSettingModel('666666')} title="关闭"></CusButton>
+          <View style={styles.top_sub_box}>
+            <Image source={require('./assets/left.jpg')} style={styles.top_little_img} />
+            <Image source={require('./assets/center.jpg')} style={styles.top_little_img} />
+            <Image source={require('./assets/right.jpg')} style={styles.top_little_img} />
+          </View>
+        </View>
+        <View style={styles.center_box}>
+          <View style={styles.center_sub_box}>
+            <View style={styles.white_box}>
+              {isStart ? <View style={styles.green_box}></View> : null}
             </View>
-            <View style={styles.container}>
-              <CusButton onPress={()=>this.updateSettingModel('111111')} title="全升"></CusButton>
-              <CusButton warning={true} onPress={()=>this.updateSettingModel('999999')} title="电源"></CusButton>
-              <CusButton onPress={()=>this.updateSettingModel('222222')} title="全降"></CusButton>
+            <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('322300')}>
+              <Image source={require('./assets/start.jpg')} style={styles.bottom_btn_img} />
+            </TouchableWithoutFeedback>
+          </View>
+          <View style={styles.center_sub_box}>
+            <View style={styles.white_box}>
+              {isStop ? <View style={styles.red_box}></View> : <View style={styles.green_box}></View>}
             </View>
-            <View style={styles.container}>
-              <CusButton onPress={()=>this.updateSettingModel('111112')} title="前升"></CusButton>
-              <CusButton onPress={()=>this.updateSettingModel('111113')} title="前降"></CusButton>
-              <CusButton onPress={()=>this.updateSettingModel('222223')} title="后升"></CusButton>
-              <CusButton onPress={()=>this.updateSettingModel('222224')} title="后降"></CusButton>
+            <TouchableWithoutFeedback onPress={()=>updateSettingModel('322301')}>
+              <Image source={require('./assets/stop.jpg')} style={styles.bottom_btn_img} />
+            </TouchableWithoutFeedback>
+          </View>
+          <View style={styles.center_sub_box}>
+            <View style={styles.white_box}>
+              {isClose ? <View style={styles.green_box}></View> : null}
             </View>
-            <View style={styles.container}>
-              <CusButton onPress={()=>this.updateSettingModel('333331')} title="电流+"></CusButton>
-              <CusButton onPress={()=>this.updateSettingModel('333330')} title="电流-"></CusButton>
-              <CusButton onPress={()=>this.updateSettingModel('444441')} title="时间+"></CusButton>
-              <CusButton onPress={()=>this.updateSettingModel('444440')} title="时间-"></CusButton>
-            </View>
-          </ImageBackground>
-          <Text style={styles.company}>河南大诚自动篷布技术有限公司</Text>
-        </ScrollView>
+            <TouchableWithoutFeedback onPress={()=>updateSettingModel('322302')}>
+              <Image source={require('./assets/close.jpg')} style={styles.bottom_btn_img} />
+            </TouchableWithoutFeedback>
+          </View>
+        </View>
       </View>
     )
   }
@@ -121,6 +147,16 @@ export default class Connected extends React.Component {
         // this.updateDate(saveName, value)
         Portal.remove()
         Toast.info('成功', 2)
+        this.stopPrevious()
+        if (value === '322300') {
+          this.previousStart()
+        }
+        if (value === '322301') {
+          this.previousStop()
+        }
+        if (value === '322302') {
+          this.previousClose()
+        }
       }).catch(() => {
         Portal.remove()
         Toast.info('设置参数出错', 2)
@@ -129,58 +165,18 @@ export default class Connected extends React.Component {
 
   /** 开启 */
   start = () => {
-    if (this.state.currentType === 'start') {
-      // Toast.info('已开启')
-      return
-    }
-    // Toast.loading('开启中...')
+    Toast.loading('开启中...')
     BluetoothManager.startNotification()
       .then(()=>{
-        // Portal.remove()
-        // Toast.info('开启成功')
+        Portal.remove()
+        Toast.info('开启成功')
         this.setState({
           currentType: 'start'
         })
       })
       .catch(err=>{
-        // Portal.remove()
-        // Toast.info('开启失败')
-      })
-  }
-
-  /** 关闭 */
-  close = () => {
-    if (this.state.currentType === 'end') {
-      Toast.info('已关闭')
-      return
-    }
-    Toast.loading('关闭中...')
-    BluetoothManager.stopNotification()
-      .then(()=>{
         Portal.remove()
-        Toast.info('关闭成功')
-        this.setState({
-          currentType: 'end'
-        })
-      })
-      .catch(err=>{
-        Portal.remove()
-        Toast.info('关闭失败')
-      })
-  }
-
-  /** 停止 */
-  stop = () => {
-    BluetoothManager.stopNotification()
-      .then(()=>{
-        this.alert('已停止接收');
-        this.setState({
-          currentType: '已停止'
-        })
-        sendMessageToBluetooth(CONNECT_TYPE.STOP, 0)
-      })
-      .catch(err=>{
-        this.alert('关闭失败');
+        Toast.info('开启失败')
       })
   }
 
@@ -192,78 +188,67 @@ export default class Connected extends React.Component {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    height: 50,
     width: '100%',
+    flexDirection: 'column',
+    paddingTop: 20,
+    backgroundColor: '#0C2F76',
+    height: '100%',
+  },
+  top_wrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  top_sub_box: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-start',
+  },
+  top_big_img: {
+    height: 70,
+    width: '100%',
+    marginLeft: 20,
+  },
+  top_little_img: {
+    height: 30,
+    width: 40,
+    marginRight: 10,
+  },
+  center_box: {
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 40,
+    marginTop: 120,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
-  contentView: {
-    display: 'flex',
-    marginTop: 20,
-    width: '100%',
-    padding: 20,
-    flexDirection: 'column'
-  },
-  contentText: {
-    marginBottom: 10,
-    fontSize: 17,
-  },
-  settingContent: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20
-  },
-  settingText: {
-    fontSize: 17,
-    marginRight: 20
-  },
-  topView: {
-    position: 'relative'
-  },
-  topSubView: {
-    position: 'absolute'
-  },
-  image: {
-    width: screenW,
-    height: screenW * 310 / 750,
-  },
-  imageView: {
-    marginTop: 5,
-    zIndex: 10,
-    shadowColor: '#000',
-    elevation: 5,
-    shadowOffset: {width: 0, height: 0},
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-  },
-  image1: {
-    marginLeft: 10,
-    width: screenW - 20,
-    height: screenW * 369 / 714,
-    resizeMode: 'contain'
-  },
-  image2: {
-    width: 128,
-    height: 50
-  },
-  mainContent: {
-    width: screenW,
-    height: screenW * 864 / 750,
+  center_sub_box: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-around',
+    alignItems: 'center',
   },
-  company: {
-    fontSize: 18,
-    fontWeight: '500',
-    width: screenW,
-    paddingLeft: 18,
-    paddingRight: 18,
-    marginTop: 10,
-    color: '#fff',
-    textAlign: 'center',
-    letterSpacing: 3
+  bottom_btn_img: {
+    width: 65,
+    height: 50,
+    marginTop: 25,
+  },
+  white_box: {
+    backgroundColor: '#fff',
+    height: 20,
+    width: 20,
+    borderRadius: 10,
+  },
+  green_box: {
+    backgroundColor: 'green',
+    height: 20,
+    width: 20,
+    borderRadius: 10,
+  },
+  red_box: {
+    backgroundColor: 'red',
+    height: 20,
+    width: 20,
+    borderRadius: 10,
   }
 })
