@@ -95,7 +95,7 @@ export default class Connected extends React.Component {
       <View style={styles.container}>
         <View style={styles.top_wrapper}>
           <View style={styles.top_sub_box}>
-            <Image source={require('./assets/name.jpg')} style={styles.top_big_img} />
+            <Image source={require('./assets/name.png')} style={styles.top_big_img} />
           </View>
           <View style={styles.top_sub_box}>
             <Image source={require('./assets/left.jpg')} style={styles.top_little_img} />
@@ -116,7 +116,7 @@ export default class Connected extends React.Component {
             <View style={styles.white_box}>
               {isStop ? <View style={styles.red_box}></View> : <View style={styles.green_box}></View>}
             </View>
-            <TouchableWithoutFeedback onPress={()=>updateSettingModel('322301')}>
+            <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('322301')}>
               <Image source={require('./assets/stop.jpg')} style={styles.bottom_btn_img} />
             </TouchableWithoutFeedback>
           </View>
@@ -124,7 +124,7 @@ export default class Connected extends React.Component {
             <View style={styles.white_box}>
               {isClose ? <View style={styles.green_box}></View> : null}
             </View>
-            <TouchableWithoutFeedback onPress={()=>updateSettingModel('322302')}>
+            <TouchableWithoutFeedback onPress={()=>this.updateSettingModel('322302')}>
               <Image source={require('./assets/close.jpg')} style={styles.bottom_btn_img} />
             </TouchableWithoutFeedback>
           </View>
@@ -206,9 +206,12 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   top_big_img: {
-    height: 70,
     width: '100%',
+    resizeMode: 'contain',
     marginLeft: 20,
+    height: 55,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   top_little_img: {
     height: 30,
